@@ -12,7 +12,7 @@ class Snake {
         };
 
         this.velocity = { //direction it's moving and how fast (velocity)
-            direction: 0, //in radians
+            direction: width > height ? 0 : Math.PI / 2, //in radians. Start moving where it has the most space
             speed: difficultySettings,
         };
 
