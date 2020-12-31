@@ -20,8 +20,8 @@ andrewblommestyn.com
 }
 
 canvas {
-    width: 100vw;
-    height: 100vh;
+    /*width: 100vw;*/
+    /*height: 100vh;*/
     padding: 0;
     margin: 0;
     display: block;
@@ -42,7 +42,7 @@ canvas {
     padding: 50px 25px;
     border-radius: 25px;
     box-shadow: 0px 10px 20px -10px;
-    transition: top 1.5s ease-in-out, background-color 0.5s ease-in-out;
+    transition: top 1s ease-in-out, background-color 0.5s ease-in-out;
 }
 
 .menu h1 {
