@@ -34,6 +34,8 @@ class Point {
 const resize = function () {
     width = window.innerWidth;
     height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
     root.style.setProperty("--width", `${width}px`);
     root.style.setProperty("--height", `${height}px`);
 }
