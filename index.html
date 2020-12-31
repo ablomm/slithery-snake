@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<!--
+Copyright 2020 Andrew Blommestyn. All Rights Reserved
+andrewblommestyn.com
+-->
+
+<html lang="en">
+
+<head>
+    <!--meta tags-->
+    <meta charset="UTF-8" />
+    <meta name="description" content="Slithery Snake is refined, continous, version of the classic game Snake" />
+    <meta name="keywords" content="game, videogame, free, snake, mobile, phone, slithery" />
+    <meta name="author" content="Andrew Blommestyn" />
+
+    <!--other-->
+    <title>Slithery Snake</title>
+
+    <!--StyleSheets-->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <canvas id="mainCanvas">
+        Your browser does not support this game
+    </canvas>
+
+    <div class="dark-screen darken" id="dark-screen"></div>
+
+    <!--Main Menu-->
+    <div class="menu" id="main-menu">
+        <h1>Slithery Snake</h1>
+        <img src="img/snake.svg" />
+        <button class="play-buttons">Play</button>
+        <button id="settings-button">Settings</button>
+        <button id="how-to-button">How to Play</button>
+    </div>
+
+    <!--How To Play Menu-->
+    <div class="menu go-up" id="how-to-menu">
+        <h1>How to Play</h1>
+
+        <h2>Goal:</h2>
+        <h4>Eat as many apples without dying</h4>
+        <h4>You die if you hit yourself or the edges</h4>
+
+        <h2>Controls:</h2>
+        <h4>W, A, Left, Up: Rotate counter-clockwise</h4>
+        <h4>S, D, Right, Down: Rotate clockwise</h4>
+        <h4>P: Pause</h4>
+        <button class="main-menu-buttons" disabled>Main Menu</button>
+    </div>
+
+    <!--Settings Menu-->
+    <div class="menu go-up" id="settings-menu">
+        <h1>Settings Menu</h1>
+
+        <h2>Graphics Settings:</h2>
+        <div class="setting">
+            <h4>Graphics:</h4>
+            <input id="graphics-input" type="range" min="-2001" max="-1" step="100" value="-1" disabled />
+        </div>
+        <div class="setting">
+            <h4>Snake Shadows:</h4>
+            <input id="shadows-input" type="checkbox" checked disabled />
+        </div>
+        <div class="setting">
+            <h4>Dark Theme:</h4>
+            <input id="dark-theme-input" type="checkbox" disabled />
+        </div>
+        <h2>Game Settings:</h2>
+        <div class="setting" ;>
+            <h4>Difficulty:</h4>
+            <input id="difficulty-input" type="range" min="3" max="10" step="1.75" value="6.5" disabled />
+        </div>
+        <button class="main-menu-buttons" disabled>Main Menu</button>
+    </div>
+
+    <!--Death Menu-->
+    <div class="menu go-up" id="death-menu">
+        <h1>Game Over</h1>
+
+        <h2 id="score">Score: </h2>
+        <h2 id="highscore">High Score: </h2>
+
+        <button class="play-buttons" disabled>Play Again</button>
+        <button class="main-menu-buttons" disabled>Main Menu</button>
+    </div>
+
+    <!--Paused Menu-->
+    <div class="menu go-up" id=paused-menu>
+        <h1>Paused</h1>
+        <button id="resume">Resume</button>
+        <button class="main-menu-buttons">Main Menu</button>
+    </div>
+
+    <span id="copyright">&#169 2020 Andrew Blommestyn. All Right Reserved</span>
+
+    <!--Scripts-->
+
+    <!--UI logic-->
+    <script src=js/UI.js></script>
+
+    <!--game logic-->
+    <script src="js/SinglyLinkedList.js"></script>
+    <script src="js/Circle.js"></script>
+    <script src="js/Apple.js"></script>
+    <script src="js/Snake.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
