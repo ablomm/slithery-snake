@@ -68,9 +68,9 @@ canvas {
 }
 
 .menu img {
-    height: 5rem;
+    height: 3rem;
     display: block;
-    margin: auto;
+    margin: 15px;
 }
 
 .menu button {
