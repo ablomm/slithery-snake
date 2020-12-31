@@ -1,0 +1,158 @@
+/*
+Copyright 2020 Andrew Blommestyn. All Rights Reserved
+andrewblommestyn.com
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10;
+}
+
+:root {
+    --background-color: #ffffff;
+    --foreground-color: black;
+    /*Dark Theme: #0F0F0F*/
+    --red-color: #f55555;
+    /*Dark Theme: #a53737*/
+}
+
+canvas {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: block;
+    background-color: var(--background-color);
+    transition: background-color 0.5s ease-in-out;
+}
+
+.menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--red-color);
+    /*rgb(247, 86, 86);*/
+    padding: 50px 25px;
+    border-radius: 25px;
+    box-shadow: 0px 10px 20px -10px;
+    transition: top 1.5s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+.menu h1 {
+    color: white;
+    font-size: 6rem;
+    text-align: center;
+    text-shadow: 0px 2px 4px black;
+}
+
+.menu h2 {
+    color: rgb(230, 230, 230);
+    font-size: 3rem;
+    text-align: left;
+    margin: 5px 0 5px 10%;
+    text-shadow: 0px 2px 4px black;
+}
+
+.menu h4 {
+    color: rgb(230, 230, 230);
+    font-size: 1.5rem;
+    text-align: left;
+    margin: 5px 0 5px 10%;
+    text-shadow: 0px 2px 4px black;
+}
+
+.menu img {
+    height: 5rem;
+    display: block;
+    margin: auto;
+}
+
+.menu button {
+    background-color: white;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 15px 32px;
+    box-shadow: 0px 10px 20px -10px black;
+    cursor: pointer;
+    color: black;
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 20px;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.menu button:hover {
+    background-color: lightgray;
+}
+
+.menu button:active {
+    background-color: white;
+}
+
+.setting {
+    display: flex;
+    flex-direction: row;
+}
+
+.setting h4 {
+    width: 40%;
+}
+
+.setting input {
+    display: inline;
+}
+
+input[type="checkbox"] {
+    height: 30px;
+    width: 30px;
+    margin: auto;
+}
+
+input[type="range"] {
+    flex-grow: 1;
+    margin: 0 5%;
+}
+
+.dark-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    transition: opacity 0.5s ease-in;
+}
+
+#copyright {
+    position: absolute;
+    color: var(--foreground-color);
+    margin: 10px;
+    bottom: 0;
+    left: 0;
+    transition: color 0.5 ease-in-out;
+}
+
+.go-up {
+    top: -50%;
+    pointer-events: none;
+}
+
+.go-down {
+    top: 50%;
+    pointer-events: all;
+}
+
+.darken {
+    opacity: 0.2;
+}
+
+.brighten {
+    opacity: 0;
+}
