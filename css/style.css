@@ -69,7 +69,7 @@ canvas {
     color: rgb(230, 230, 230);
     font-size: 3rem;
     text-align: left;
-    margin: 5px 0 5px 10%;
+    margin: 0px 0 0px 10%;
     text-shadow: 0px 2px 4px black;
 }
 
@@ -79,6 +79,18 @@ canvas {
     text-align: left;
     margin: 5px 0 5px 10%;
     text-shadow: 0px 2px 4px black;
+}
+
+.menu h6 {
+    color: rgb(230, 230, 230);
+    font-size: 1rem;
+    text-align: left;
+    margin: 5px 0 5px 10%;
+    text-shadow: 0px 2px 4px black;
+}
+
+.menu a {
+    color: rgb(230, 230, 230);
 }
 
 .menu img {
@@ -98,8 +110,16 @@ canvas {
     color: black;
     text-align: center;
     font-size: 2rem;
-    margin-top: 20px;
+    margin: 10px;
     transition: background-color 0.1s ease-in-out;
+}
+
+.two-buttons {
+    display: flex;
+}
+
+.two-buttons button {
+    width: 50%;
 }
 
 .menu button:hover {
@@ -134,16 +154,22 @@ input[type="range"] {
     margin: 0 5%;
 }
 
+.scores {
+    margin-bottom: 10px;
+}
+
 #copyright {
     position: absolute;
     color: var(--foreground-color);
+    width: fit-content;
     margin: 10px;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     transition: color 0.5 ease-in-out;
 }
 
-.go-up {
+.hide {
     top: 0%;
     transform: translate(-50%, -100%);
     pointer-events: none;
