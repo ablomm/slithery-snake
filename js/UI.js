@@ -60,7 +60,6 @@ function brighten() { //brightens screen if it was darkened
 }
 
 function animateMenuUp(menu) { //animates a given menu up
-	menu.classList.remove("go-down");
 	menu.classList.add("go-up");
 
 	//disables all the buttons and inputs of the menu
@@ -71,7 +70,6 @@ function animateMenuUp(menu) { //animates a given menu up
 
 function animateMenuDown(menu) { //animates a given menu down to be active
 	menu.classList.remove("go-up");
-	menu.classList.add("go-down");
 
 	//enables all the buttons and inputs of the menu
 	menu.querySelectorAll("button, input").forEach(button => {
