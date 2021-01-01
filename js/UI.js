@@ -9,58 +9,47 @@ const root = document.documentElement;
 //canvas
 const canvas = document.querySelector("#mainCanvas");
 
-//screens
-const darkScreen = document.querySelector("#dark-screen");
-
 //menus
-const mainMenu = document.querySelector("#main-menu");
-const deathMenu = document.querySelector("#death-menu");
-const settingsMenu = document.querySelector("#settings-menu");
-const howtoMenu = document.querySelector("#how-to-menu");
-const pausedMenu = document.querySelector("#paused-menu");
-
-let activeMenu = mainMenu; //holds which menu is open
-
-//text
-const scoreHeader = document.querySelector("#score");
-const highScoreHeader = document.querySelector("#highscore");
-
-//graphics settings inputs
-const graphicsInput = document.querySelector("#graphics-input");
-graphicsInput.value = localStorage.getItem("settings-graphics") !== null ? localStorage.getItem("settings-graphics") : -1;
-
-const darkThemeInput = document.querySelector("#dark-theme-input");
-darkThemeInput.checked = localStorage.getItem("settings-darkTheme") !== null ? localStorage.getItem("settings-darkTheme") == "true" : false;
-
-const shadowsInput = document.querySelector("#shadows-input");
-shadowsInput.checked = localStorage.getItem("settings-shadows") !== null ? localStorage.getItem("settings-shadows") == "true" : true;
-
-//game settings inputs
-const difficultyInput = document.querySelector("#difficulty-input");
-difficultyInput.value = localStorage.getItem("settings-difficulty") !== null ? localStorage.getItem("settings-difficulty") : 6.5;
+let menus = {
+	mainMenu: document.querySelector("#main-menu"),
+	settingsMenu: document.querySelector("#settings-menu"),
+	howtoMenu: document.querySelector("#how-to-menu"),
+	aboutMenu: document.querySelector("#about-menu"),
+	deathMenu: document.querySelector("#death-menu"),
+	pausedMenu: document.querySelector("#paused-menu"),
+	activeMenu: document.querySelector("#main-menu")
+};
 
 //settings local variables
-let graphicsSettings = graphicsInput.value;
-let darkThemeSettings = darkThemeInput.checked;
+const settings = {
+	graphicsSettings: localStorage.getItem("settings-graphics") !== null ? localStorage.getItem("settings-graphics") : -1,
+	darkThemeSettings: localStorage.getItem("settings-darkTheme") !== null ? localStorage.getItem("settings-darkTheme") == "true" : false,
+	difficultySettings: localStorage.getItem("settings-difficulty") !== null ? localStorage.getItem("settings-difficulty") : 6.5,
+	shadowsSettings: localStorage.getItem("settings-shadows") !== null ? localStorage.getItem("settings-shadows") == "true" : true
+}
+
+//update inputs values
+document.querySelector("#graphics-input").value = settings.graphicsSettings;
+document.querySelector("#dark-theme-input").checked = settings.darkThemeSettings;
+document.querySelector("#shadows-input").checked = settings.shadowsSettings;
+document.querySelector("#difficulty-input").value = settings.difficultySettings;
 updateStyle();
-let difficultySettings = difficultyInput.value;
-let shadowsSettings = shadowsInput.checked;
-
-
 
 //animations
 function darken() { //darkens screen
+	const darkScreen = document.querySelector("#dark-screen");
 	darkScreen.classList.remove("brighten");
 	darkScreen.classList.add("darken");
 }
 
 function brighten() { //brightens screen if it was darkened
+	const darkScreen = document.querySelector("#dark-screen");
 	darkScreen.classList.remove("darken");
 	darkScreen.classList.add("brighten");
 }
 
 function animateMenuUp(menu) { //animates a given menu up
-	menu.classList.add("go-up");
+	menu.classList.add("hide");
 
 	//disables all the buttons and inputs of the menu
 	menu.querySelectorAll("button, input").forEach(button => {
@@ -69,7 +58,7 @@ function animateMenuUp(menu) { //animates a given menu up
 }
 
 function animateMenuDown(menu) { //animates a given menu down to be active
-	menu.classList.remove("go-up");
+	menu.classList.remove("hide");
 
 	//enables all the buttons and inputs of the menu
 	menu.querySelectorAll("button, input").forEach(button => {
@@ -78,32 +67,32 @@ function animateMenuDown(menu) { //animates a given menu down to be active
 }
 
 function animateMenu(menu) { //shorthand function that takes care of all the animations and activates the given menu
-	animateMenuUp(activeMenu);
+	animateMenuUp(menus.activeMenu);
 	animateMenuDown(menu);
-	activeMenu = menu;
+	menus.activeMenu = menu;
 }
 
 function startGameAnimation() { //starts the canvas, takes care of all the animations
-	animateMenuUp(activeMenu);
-	activeMenu = canvas;
+	animateMenuUp(menus.activeMenu);
+	menus.activeMenu = canvas;
 	brighten();
 	start();
 }
 
 function endGameAnimation() { //animations for when you die
-	if (activeMenu != canvas) { //This shouldn't be true normally. I'm just making sure there isn't multiple menues open
-		animateMenuUp(activeMenu);
+	if (menus.activeMenu != canvas) { //This shouldn't be true normally. I'm just making sure there isn't multiple menues open
+		animateMenuUp(menus.activeMenu);
 	}
-	animateMenuDown(deathMenu);
-	activeMenu = deathMenu;
+	animateMenuDown(menus.deathMenu);
+	menus.activeMenu = menus.deathMenu;
 	darken();
 }
 
 function pause() { //animations and operations to pause the game
-	if (activeMenu === canvas) {
+	if (menus.activeMenu === canvas) {
 		window.cancelAnimationFrame(currentAnimation); //stops canvas animations
-		animateMenuDown(pausedMenu);
-		activeMenu = pausedMenu;
+		animateMenuDown(menus.pausedMenu);
+		menus.activeMenu = menus.pausedMenu;
 		darken();
 	}
 }
@@ -113,7 +102,7 @@ function pause() { //animations and operations to pause the game
 //all of the buttons that go back to main menu
 document.querySelectorAll(".main-menu-buttons").forEach((button) => {
 	button.addEventListener("click", () => {
-		animateMenu(mainMenu)
+		animateMenu(menus.mainMenu)
 	});
 });
 
@@ -125,47 +114,52 @@ document.querySelectorAll(".play-buttons").forEach((button) => {
 });
 
 //main menu buttons
-document.querySelector("#settings-button").addEventListener('click', () => {
-	animateMenu(settingsMenu);
+document.querySelector("#settings-button").addEventListener("click", () => {
+	console.log("test");
+	animateMenu(menus.settingsMenu);
 });
 
-document.querySelector("#how-to-button").addEventListener('click', () => {
-	animateMenu(howtoMenu);
+document.querySelector("#how-to-button").addEventListener("click", () => {
+	animateMenu(menus.howtoMenu);
+});
+
+document.querySelector("#about-button").addEventListener("click", () => {
+	animateMenu(menus.aboutMenu);
 });
 
 //pause menu buttons
 document.querySelector("#resume").addEventListener("click", () => {
-	animateMenuUp(pausedMenu);
-	activeMenu = canvas;
+	animateMenuUp(menus.pausedMenu);
+	menus.activeMenu = canvas;
 	brighten();
 	enable();
 });
 
 //settings inputs
-graphicsInput.addEventListener("input", event => {
+document.querySelector("#graphics-input").addEventListener("input", event => {
 	localStorage.setItem("settings-graphics", event.target.value);
-	graphicsSettings = event.target.value;
+	settings.graphicsSettings = event.target.value;
 });
 
-shadowsInput.addEventListener("input", event => {
-	localStorage.setItem("settings-shadows", event.target.checked);
-	shadowsSettings = event.target.checked;
-});
-
-darkThemeInput.addEventListener("input", event => {
+document.querySelector("#dark-theme-input").addEventListener("input", event => {
 	localStorage.setItem("settings-darkTheme", event.target.checked);
-	darkThemeSettings = event.target.checked;
+	settings.darkThemeSettings = event.target.checked;
 	updateStyle();
 });
 
-difficultyInput.addEventListener("input", event => {
+document.querySelector("#shadows-input").addEventListener("input", event => {
+	localStorage.setItem("settings-shadows", event.target.checked);
+	settings.shadowsSettings = event.target.checked;
+});
+
+document.querySelector("#difficulty-input").addEventListener("input", event => {
 	localStorage.setItem("settings-difficulty", event.target.value);
-	difficultySettings = event.target.value;
+	settings.difficultySettings = event.target.value;
 });
 
 //updates colors to be dark theme or light theme
 function updateStyle() {
-	if (darkThemeSettings) {
+	if (settings.darkThemeSettings) {
 		//dark theme colors
 		root.style.setProperty("--background-color", "#0F0F0F");
 		root.style.setProperty("--foreground-color", "#FFFFFF");
@@ -178,7 +172,6 @@ function updateStyle() {
 	}
 }
 
-
 //visibility changes
 document.addEventListener("visibilitychange", event => {
 	if (document.visibilityState != "visible") { //when you leave the page
@@ -188,9 +181,9 @@ document.addEventListener("visibilitychange", event => {
 
 //Upate stores in html
 function updateScores() {
-	scoreHeader.textContent = `Score: ${score}`;
+	document.querySelector("#score").textContent = `Score: ${score}`;
 	if (score > localStorage.getItem("highscore")) { //update highscore
 		localStorage.setItem("highscore", score);
 	}
-	highScoreHeader.textContent = `High Score: ${localStorage.getItem("highscore") || 0}`;
+	document.querySelector("#highscore").textContent = `High Score: ${localStorage.getItem("highscore") || 0}`;
 }
