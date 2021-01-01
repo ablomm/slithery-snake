@@ -26,7 +26,7 @@ const settings = {
 	darkThemeSettings: localStorage.getItem("settings-darkTheme") !== null ? localStorage.getItem("settings-darkTheme") == "true" : false,
 	difficultySettings: localStorage.getItem("settings-difficulty") !== null ? localStorage.getItem("settings-difficulty") : 6.5,
 	shadowsSettings: localStorage.getItem("settings-shadows") !== null ? localStorage.getItem("settings-shadows") == "true" : true
-}
+};
 
 //update inputs values
 document.querySelector("#graphics-input").value = settings.graphicsSettings;
