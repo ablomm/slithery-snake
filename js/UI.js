@@ -115,7 +115,6 @@ document.querySelectorAll(".play-buttons").forEach((button) => {
 
 //main menu buttons
 document.querySelector("#settings-button").addEventListener("click", () => {
-	console.log("test");
 	animateMenu(menus.settingsMenu);
 });
 
