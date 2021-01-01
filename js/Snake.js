@@ -8,25 +8,25 @@ class Snake {
     constructor() {
         this.position = { //where the head is now
             x: (width / 2),
-            y: (height / 2),
+            y: (height / 2)
         };
 
         this.velocity = { //direction it's moving and how fast (velocity)
-            direction: width > height ? 0 : Math.PI / 2, //in radians. Start moving where it has the most space
-            speed: difficultySettings,
+            direction: width > height ? 0 : Math.PI / 2, //in radians. Start moving where it has the most space (the direction will be mirrored horizontally because of co-ordinate system)
+            speed: settings.difficultySettings
         };
 
         this.rotation = { //direction it's rotating and how fast 
             clockwise: false,
             counterClockwise: false,
-            speed: 5 * Math.PI / 180, //absolute angular velocity in radians (make this larger to increase turning speed/lower turning radius)
+            speed: 5 * Math.PI / 180 //absolute angular velocity in radians (make this larger to increase turning speed/lower turning radius)
         };
 
         this.segments = new SinglyLinkedList(); //holds all the segments of the snake
         this.width = 40; //side of snake
         this.ate = false; //if it ate
 
-        this.setEatTime(500); //start the snake off at a given length
+        this.setEatTime(350); //start the snake off at a given length
     }
 
     //sets time the snake will grow
@@ -39,25 +39,16 @@ class Snake {
 
     //checks if the next update will result in a collision
     checkHit() {
-        const data = []; //holds color data for each pixel infront of the snake (hitbox)
-
-        //for loop that gets the color data directly infront of the snake
-        for (let i = this.velocity.direction - Math.PI / 2; i <= this.velocity.direction + Math.PI / 2; i += 10 * Math.PI / 180) { //loops over the degrees where the snakes head is exposed (semi-circle)
+        //for when the snake hits itself
+        for (let i = this.velocity.direction - Math.PI / 2; i <= this.velocity.direction + Math.PI / 2; i += 10 * Math.PI / 180) { //for loop that gets the color data directly infront of the snake
+            //position of hitbox (semi-circle arround head)
             const imageX = this.position.x + Math.cos(i) * (this.width / 2 + 2);
             const imageY = this.position.y + Math.sin(i) * (this.width / 2 + 2);
-            data.push(ctx.getImageData(imageX, imageY, 1, 1).data);
 
-            //draws hitboxes
-            /* ctx.beginPath();
-         ctx.fillStyle = "red";
-         ctx.rect(imageX, imageY, 1, 1)
-         ctx.fill();*/
-        }
+            const point = ctx.getImageData(imageX, imageY, 1, 1).data; //holds color data for the hitbox pixel
 
-
-        //check if there is a point in the hitbox that is a black pixel
-        for (let point of data) {
-            if (darkThemeSettings) {
+            //checks if the color is the same as the snake
+            if (settings.darkThemeSettings) {
                 if (point[0] == 255 && point[1] == 255 && point[2] == 255 && point[3] == 255) { //color info for black pixel (RGBA)
                     return true;
                 }
@@ -68,7 +59,7 @@ class Snake {
             }
         }
 
-        //checks if snake it outside the scene
+        //for when the snake hits the walls
         if (this.position.x - this.width / 2 < 0 || this.position.x + this.width / 2 > width || this.position.y - this.width / 2 < 0 || this.position.y + this.width / 2 > height) {
             return true;
         }
@@ -89,7 +80,7 @@ class Snake {
         //checks if an apple was eaten
         if (apple.isEaten()) {
             score++;
-            this.setEatTime(500);
+            this.setEatTime(350);
             apple = new Apple();
         }
     }
@@ -100,7 +91,7 @@ class Snake {
 
         if (this.segments.length == 0) { //makes sure snake isn't empty
             this.segments.add(headPoint);
-        } else if (this.segments.tail.element.distanceSquared(headPoint) >= -graphicsSettings) { //draws it only if the new point is a certain distance away. This is the graphics setting
+        } else if (this.segments.tail.element.distanceSquared(headPoint) >= -settings.graphicsSettings) { //draws it only if the new point is a certain distance away. This is the graphics setting
             this.segments.add(headPoint); //new segment at the head
 
             if (!snake.ate) { //when you ate don't remove last segment
@@ -113,7 +104,7 @@ class Snake {
         //shadow
         ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
 
-        if (shadowsSettings) { //if you want to draw shadows
+        if (settings.shadowsSettings) { //if you want to draw shadows
             ctx.shadowBlur = 10;
             ctx.shadowOffsetY = 10;
         } else { //if you don't want shadows

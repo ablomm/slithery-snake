@@ -64,9 +64,6 @@ function keyDown(event) {
             case 37: //left
                 snake.rotation.counterClockwise = true;
                 break;
-            case 32: //space REMEMBER TO REMOVE
-                snake.setEatTime(500);
-                break;
         }
     }
 }
@@ -130,7 +127,7 @@ function draw() {
 
     //draw everything
     apple.draw('red');
-    snake.draw(darkThemeSettings ? "white" : "black");
+    snake.draw(settings.darkThemeSettings ? "white" : "black");
 }
 
 //main loop
